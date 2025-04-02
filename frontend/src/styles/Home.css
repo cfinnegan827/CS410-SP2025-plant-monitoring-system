@@ -3,3 +3,8 @@
     margin-right: auto;
     width: 40%;
 }
+#tsparticles {
+    z-index: -1;
+    height: 100%;
+    position: absolute
+}
