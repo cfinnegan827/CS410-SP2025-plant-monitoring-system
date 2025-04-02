@@ -18,14 +18,26 @@ const ParticleBackground = () => {
           color: "#000",
         },
         particles: {
-          number: { value: 50 },
+          number: { value: 80 },
           shape: { type: "circle" },
-          opacity: { value: 0.5 },
-          size: { value: 3 },
-          move: { enable: true, speed: 2 },
+          opacity: {
+            value: 0.5,
+            random: true, // Make opacity different for each particle
+            animation: {
+              enable: true,
+              speed: .2, // Adjust speed for twinkle effect
+              minimumValue: 0.1, // Minimum opacity
+              sync: false, 
+            },
+        },
+          size: { 
+            maximumValue: 3,
+            random: true
+           },
+          move: { enable: true, speed: .1 },
         },
         interactivity: {
-          events: { onHover: { enable: true, mode: "repulse" } },
+          events: { onHover: { enable: true, mode: "attract" } },
           modes: { repulse: { distance: 100 } },
         },
       }}
