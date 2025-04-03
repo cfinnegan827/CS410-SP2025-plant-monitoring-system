@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.title {
+    font-family: 'Oswald', sans-serif;
+}

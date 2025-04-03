@@ -21,12 +21,12 @@ const ParticleBackground = () => {
           number: { value: 80 },
           shape: { type: "circle" },
           opacity: {
-            value: 0.5,
-            random: true, // Make opacity different for each particle
+            value: .9,
+            random: true,
             animation: {
               enable: true,
-              speed: .2, // Adjust speed for twinkle effect
-              minimumValue: 0.1, // Minimum opacity
+              speed: .2, 
+              minimumValue: 0.1, 
               sync: false, 
             },
         },
