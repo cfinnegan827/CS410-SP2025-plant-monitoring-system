@@ -25,8 +25,8 @@ const ParticleBackground = () => {
             random: true,
             animation: {
               enable: true,
-              speed: .2, 
-              minimumValue: 0.1, 
+              speed: 1, 
+              minimumValue: 0.5, 
               sync: false, 
             },
         },
@@ -34,7 +34,7 @@ const ParticleBackground = () => {
             maximumValue: 3,
             random: true
            },
-          move: { enable: true, speed: .1 },
+          move: { enable: true, speed: .05 },
         },
         interactivity: {
           events: { onHover: { enable: true, mode: "attract" } },

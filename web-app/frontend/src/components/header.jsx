@@ -20,8 +20,8 @@ function Header() {
         <div className='headerLinks'>
           
             <Link to="/" className="link">Home</Link>
-            <Link to="/dashboard" className="link">Dashboard</Link>
             <Link to="/about" className="link">About</Link>
+            <Link to="/dashboard" className="link">Dashboard</Link>
           
         </div>
       </div>
