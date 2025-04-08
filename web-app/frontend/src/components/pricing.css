@@ -1,0 +1,95 @@
+/* pricing.css */
+
+.pricing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pricing-title {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+    color: #ffffff;
+}
+
+.pricing-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+@media (min-width: 768px) {
+    .pricing-cards {
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch; /* Ensures all cards have the same height */
+    }
+}
+
+.pricing-card {
+    background: #f4f4f8;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1; /* Equal width & height */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.featured {
+    background: linear-gradient(135deg, #e0e0ff, #d0d8ff);
+    border: 2px solid #5c6bc0;
+}
+
+.plan-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.plan-price {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #5c6bc0;
+}
+
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    color: #555;
+    flex-grow: 1;
+}
+
+.plan-features li {
+    margin-bottom: 0.75rem;
+}
+
+.plan-button {
+    background-color: #5c6bc0;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+
+.plan-button:hover {
+    background-color: #3f51b5;
+}
