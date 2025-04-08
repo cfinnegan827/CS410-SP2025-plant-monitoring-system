@@ -1,0 +1,22 @@
+.aboutSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(26, 26, 26);
+    padding: 20px;
+    height: 1000px;  }
+  
+  .aboutSectionContainer {
+    max-width: 800px;
+    text-align: center;
+  }
+  
+  .aboutSection ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .aboutSection ul li {
+    margin: 0.5rem 0;
+  }
+  

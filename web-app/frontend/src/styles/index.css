@@ -5,12 +5,19 @@
 body {
     background-color: black;
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
 .title {
     font-family: 'Oswald', sans-serif;
 }
 
-a {
+.text {
     font-family: 'Open Sans', sans-serif;
 }
+
+html {
+    scroll-behavior: smooth;
+  }
+  

@@ -17,11 +17,11 @@ function Header() {
         </div>
         )
         }
-        <div className='headerLinks'>
+        <div className='headerLinks text'>
           
             <Link to="/" className="link">Home</Link>
-            <Link to="/about" className="link">About</Link>
-            <Link to="/dashboard" className="link">Dashboard</Link>
+            <a href="#about" className="link">About</a>
+            <Link to="/login" className="link">Log In</Link>
           
         </div>
       </div>

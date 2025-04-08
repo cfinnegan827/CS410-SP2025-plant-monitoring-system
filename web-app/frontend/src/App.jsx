@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
+import LogIn from "./pages/login";
 
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<LogIn />} />
+
         </Routes>
       </Router>
 
