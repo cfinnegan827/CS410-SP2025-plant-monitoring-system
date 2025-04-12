@@ -1,8 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cron from 'node-cron';
 import dotenv from 'dotenv';
 import postRoutes from './routes/posts.js';
 import bodyParser from 'body-parser';
+import userModel from './models/Users.js';
+import environmentModel from './models/Environments.js';
 
 const app = express();
 dotenv.config();
@@ -23,23 +26,40 @@ app.get('/', (req, res) => {
 
 
 // Connection to DB
-mongoose.connect(MONGO_URL).then(() => {
+mongoose.connect(MONGO_URL).then(async () => {
     console.log("DB is connected");
+
+    try {
+        await userModel.syncIndexes();
+        console.log("Indexes synced successfully.");
+    } catch (err) {
+        console.log("Error syncing indexes:", err.message);
+    }
     app.listen(PORT, ()=> {
         console.log(`server is running on port ${PORT}`);
     });
 }).catch((error) => {
     console.log(error);
     console.log('could not connect');
-})
+});
 
-// DB SCHEMAS 
+// cron.schedule('*/15 * * *', async () => {
+//     try {
+//         const environments = await environmentModel.find();
 
-// const userSchema = new mongoose.Schema({
-//     name: String,
-//     username: String,
-//     password_hashed: String,
-//     phone_number: String,
-// });
-
-// const userModel = mongoose.model("users", userSchema);
+//         for (const env of environments) {
+//             if (env.current_temp && env.current_humidity) {
+//                 env.readings.push({
+//                     temp: env.current_temp,
+//                     humidity: env.current_humidity
+//                 });
+//                 await env.save();
+//             }
+//         }
+//     } catch (err) {
+//         res.status(500).json({
+//             success: false,
+//             error: err.message
+//         })
+//     }
+// })

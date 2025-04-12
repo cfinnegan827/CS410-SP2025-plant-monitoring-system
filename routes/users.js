@@ -100,40 +100,6 @@ router.post('/login', (req, res) => {
 
 })
 
-// ENVIRONMENT SETUP
-// router.post('add-plants', async (req, res) => {
-//     const {user_id, {
-        
-//     }} = req.body;
-    
-//     try {
-//         const updatedEnvironment = await 
-//     }
-// })
 
-//
-
-
-// to get a specific post 
-router.get('/:postId', async (req, res) => {
-    try {
-        const post = await Post.findById(req.params.postId);
-        res.json(post);
-    } catch (err) {
-        res.json( {message: err});
-    }
-    
-})
-
-// DELETE A POST 
-router.delete('/:postId', async (req, res) => {
-    try {
-        const removePost = await Post.remove({_id: req.params.postId});
-        res.json(removedPost);
-    } catch (err) {
-        res.json( {message: err});
-    }
-    
-})
 
 export default router;
