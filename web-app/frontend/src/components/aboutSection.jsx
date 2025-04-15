@@ -11,10 +11,10 @@ function AboutSection({ id }) {
                     the four essential metrics your green friend needs to thrive:
                 </p>
                 <ul className="text">
-                    <li><strong>pH Level</strong></li>
-                    <li><strong>Soil Moisture</strong></li>
-                    <li><strong>Ambient Temperature</strong></li>
-                    <li><strong>Light Intensity</strong></li>
+                    <li>🌿 <strong>pH Level</strong></li>
+                    <li>🌿 <strong>Soil Moisture</strong></li>
+                    <li>🌿 <strong>Ambient Temperature</strong></li>
+                    <li>🌿 <strong>Light Intensity</strong></li>
                 </ul>
                 <p className="text">
                     Using real-time sensor data, our technology helps you understand your plant’s environment and 
