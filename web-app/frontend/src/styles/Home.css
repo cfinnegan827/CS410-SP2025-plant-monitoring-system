@@ -1,0 +1,19 @@
+.logoContainer {
+    display: flex;
+    height: 100vh;
+    width: 50%;
+
+}
+
+.logoContainer .title {
+    font-size: 10vw;
+    width: 100%;
+    line-height: 10vw;
+    margin-left: 50px;
+}
+
+#tsparticles {
+    z-index: -1;
+    height: 100%;
+    position: absolute
+}

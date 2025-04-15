@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  justify-content: space-between; /* Corrected */
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
+  height: 50px;
+  position: relative; /* Ensures absolute children position correctly */
+  background-color: rgb(26, 26, 26);
+}
+
+.headerLogo a {
+  padding: 10px;
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.headerLinks {
+  font-size: 1.5rem;
+  padding: 10px;
+  position: absolute;
+  right: 0px;
+}
+
+.headerLinks a {
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.headerLinks a:hover {
+  text-decoration: underline;
+}
