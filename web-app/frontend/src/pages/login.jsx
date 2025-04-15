@@ -1,10 +1,13 @@
 import React from 'react';
+import LoginBoard from "../components/loginBoard.jsx";
+import ParticleBackground from "../components/particles.jsx";
 
 
 function LogIn() {
   return (
     <div>
-        <h1>Log In</h1>
+        <LoginBoard />
+        <ParticleBackground />
     </div>
   );
 }
