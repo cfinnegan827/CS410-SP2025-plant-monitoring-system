@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import {generateVerificationCode} from '../utils/emailTools.js';
+// Removed generateVerificationCode import since it's no longer needed
 
-const verificationCode = generateVerificationCode();
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -29,22 +28,21 @@ const userSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         default: Date.now,
-        expires: 900 // will make mongo delete the document after 15 minutes
+        expires: 900 // Mongo will delete document after 15 minutes
     },
+    // Made verificationCode optional since we're not using it now
     verificationCode: {
         type: String,
-        required: true
+        required: false // Optional now
     },
     status: {
         type: String, 
-        enum: ['pending', 'verified'], // allowed values
-        default: 'pending'
+        enum: ['pending', 'verified'], // Allowed values
+        default: 'verified' // Directly set status to 'verified'
     }
 });
 
-
-// create the model
-// Time-to-live TTL only applies to status: pending
+// Create the model
 userSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900, partialFilterExpression: { status: 'pending' } });
 
 const userModel = mongoose.model("users", userSchema);
