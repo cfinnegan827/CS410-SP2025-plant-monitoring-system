@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // You forgot this!
 import './registerBoard.css';
 
 function RegisterBoard() {
@@ -7,12 +8,18 @@ function RegisterBoard() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        setLoading(true);  // Start loading
+        setLoading(true);
+        setError('');
+        setSuccess('');
 
+        // TODO: FIX THE 5001 ISSUE (make dynamic to env variable)
         try {
             const response = await fetch('http://localhost:5001/api/users/register', {
                 method: 'POST',
@@ -25,19 +32,22 @@ function RegisterBoard() {
             const data = await response.json();
 
             if (data.success) {
-                // Successfully registered
-                alert('Registration successful!');
-                navigate('/login');
-                // Optionally, save user data to state or redirect to login page
+                setSuccess('Registration successful! Redirecting to login...');
+                setError('');
+
+                // Optionally wait a bit before redirecting
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1500);
             } else {
-                // Show error message
                 setError(data.message);
+                setSuccess('');
             }
         } catch (err) {
-            // Handle any unexpected errors (like network issues)
             setError('An error occurred. Please try again later.');
+            setSuccess('');
         } finally {
-            setLoading(false);  // Stop loading
+            setLoading(false);
         }
     };
 
@@ -45,43 +55,47 @@ function RegisterBoard() {
         <div className="registerBoard">
             <div className="registerBoardContainer">
                 <h1 className="registerBoardTitle">Register</h1>
+
                 {error && <p className="error-message">{error}</p>}
+                {success && <p className="success-message">{success}</p>}
+
                 <div className="registerBoardForm">
                     <label htmlFor="name">Name:</label>
                     <input
                         type="text"
                         id="name"
-                        name="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
+
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
                         id="username"
-                        name="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
+
                     <label htmlFor="email">Email:</label>
                     <input
                         type="email"
                         id="email"
-                        name="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+
                     <label htmlFor="password">Password:</label>
                     <input
                         type="password"
                         id="password"
-                        name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+
                     <button onClick={handleRegister} disabled={loading}>
                         {loading ? 'Registering...' : 'Register'}
                     </button>
+
                     <p>Already have an account?</p>
                     <a href="/login">Login</a>
                 </div>

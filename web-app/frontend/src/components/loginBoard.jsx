@@ -13,6 +13,9 @@ function LoginBoard() {
         e.preventDefault();
         setLoading(true);
 
+        // TODO: FIX THE 5001 ISSUE (make dynamic to env variable)
+
+
         try {
             const response = await fetch('http://localhost:5001/api/users/login', {
                 method: 'POST',
@@ -65,7 +68,8 @@ function LoginBoard() {
                     <button onClick={handleLogin} disabled={loading}>
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
-                    <p>Don't have an account? <a href="/register">Register</a></p>
+                    <p>Don't have an account?</p>
+                    <a href="/register">Register</a>
                 </div>
             </div>
         </div>

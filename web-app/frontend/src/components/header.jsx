@@ -8,12 +8,12 @@ function Header() {
   const navigate = useNavigate();
 
   // Check if the user is logged in by checking a token in localStorage
-  const isLoggedIn = localStorage.getItem('userToken'); // Assuming the token is saved under 'userToken'
+  const isLoggedIn = localStorage.getItem('userToken');
 
   const handleLogout = () => {
     // Remove the user token from localStorage to log out the user
     localStorage.removeItem('userToken');
-    navigate('/'); // Redirect to login page after logout
+    navigate('/'); // Redirect to home page after logout
   };
 
   return (

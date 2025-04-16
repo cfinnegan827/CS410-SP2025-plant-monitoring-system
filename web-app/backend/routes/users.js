@@ -1,6 +1,9 @@
 import express from 'express';
 import userModel from '../models/Users.js';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -64,6 +67,7 @@ router.post('/login', async (req, res) => {
         }
 
         // Create JWT token
+
         const token = jwt.sign(
             { id: user._id, username: user.username },
             JWT_SECRET,
