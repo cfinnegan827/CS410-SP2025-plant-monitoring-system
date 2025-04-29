@@ -1,5 +1,7 @@
 import express from 'express';
 import environmentModel from '../models/Environments.js';
+import readingModel from '../models/Readings.js';
+import { authDevice } from '../middleware/authDevice.js';
 
 const router = express.Router();
 
@@ -87,7 +89,7 @@ router.post('/add-group/:envId', async (req, res) => {
 });
 
 // GET CURRENT READING + UPDATE READINGS ARRAY
-router.patch('/environment/:envId/get-readings', async (req, res) => {
+router.post('/environment/:envId/readings', authDevice, async (req, res) => {
     const { envId } = req.params;
     const { temp, humidity } = req.body;
 
@@ -106,14 +108,15 @@ router.patch('/environment/:envId/get-readings', async (req, res) => {
         // update current readings 
         environment.current_humidity = parsedHumidity;
         environment.current_temp = parsedTemp;
+        await environment.save();
 
         // add the data to historical readings
-        environment.readings.push({
+        const reading = new readingModel({
+            environment_id: envId,
             temp: parsedTemp,
             humidity: parsedHumidity
         });
-
-        await environment.save();
+        await reading.save();
 
         res.status(200).json({
             success: true,
@@ -126,6 +129,45 @@ router.patch('/environment/:envId/get-readings', async (req, res) => {
             success: false,
             error: err.message
         });
+    }
+})
+// sorted newest first
+// QUERY READINGS OF AN ENVIRONMENT (for data visuals)
+router.get('/environment/:envId/readings', async (req, res) => {
+    try {
+        const readings = await readingModel.find({
+            environment_id: req.params.envId
+        }).sort({ timestamp: -1 }).limit(100);
+        res.status(200).json({
+            success: true,
+            readings
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err.message
+        })
+    }
+})
+
+// sorted newest date first 
+// QUERY READINGS OF AN ENVIRONMENT LAST 24HRS (for data visuals)
+router.get('/environment/:envId/readings', async (req, res) => {
+    try {
+        const oneDayAgo = new Date(Date.now() - 24 * 3600 * 1000);
+        const readings = await readingModel.find({
+            environment_id: req.params.envId,
+            timestamp: { $gte: oneDayAgo}
+        }).sort({ timestamp: -1 }).limit(100);
+        res.status(200).json({
+            success: true,
+            readings
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err.message
+        })
     }
 })
 

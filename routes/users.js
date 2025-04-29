@@ -88,9 +88,9 @@ router.post('/verify', async(req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    // can login in using email or username 
+    // can login in using only username 
     const {username, password} = req.body;
-    userModel.findOne({username:username})
+    userModel.findOne({ email })
     .then(user => {
         if (user) {
             if (user.password === password) res.json("Success");

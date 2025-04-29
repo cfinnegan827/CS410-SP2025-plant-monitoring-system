@@ -31,16 +31,17 @@ const environmentSchema = new mongoose.Schema({
             }
         }, {_id: false})
     },
-    readings: [
-        {
-            temp: Number,
-            humidity: Number,
-            timestamp: {
-                type: Date,
-                default: Date.now
-            }
-        }
-    ],
+    // will delete to replace to a seperate document
+    // readings: [
+    //     {
+    //         temp: Number,
+    //         humidity: Number,
+    //         timestamp: {
+    //             type: Date,
+    //             default: Date.now
+    //         }
+    //     }
+    // ],
     created_at: {
         type: Date,
         default: Date.now
