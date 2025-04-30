@@ -1,25 +1,49 @@
 {
-  "hash": "d54f2f2f",
-  "configHash": "662f2daf",
-  "lockfileHash": "05d2cbf6",
-  "browserHash": "e0ea8216",
+  "hash": "c857ac88",
+  "configHash": "3424ae69",
+  "lockfileHash": "f3ab3548",
+  "browserHash": "02851023",
   "optimized": {
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "321a7f89",
+      "fileHash": "96ad1066",
       "needsInterop": true
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "7f1489a6",
+      "fileHash": "68fce8d6",
       "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "9dfe8595",
+      "needsInterop": false
+    },
+    "react-tsparticles": {
+      "src": "../../node_modules/react-tsparticles/esm/index.js",
+      "file": "react-tsparticles.js",
+      "fileHash": "ccff945e",
+      "needsInterop": false
+    },
+    "tsparticles-slim": {
+      "src": "../../node_modules/tsparticles-slim/esm/index.js",
+      "file": "tsparticles-slim.js",
+      "fileHash": "98427f98",
+      "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-Y455YYDO": {
-      "file": "chunk-Y455YYDO.js"
+    "chunk-3527N3GG": {
+      "file": "chunk-3527N3GG.js"
+    },
+    "chunk-5B3IYUYS": {
+      "file": "chunk-5B3IYUYS.js"
+    },
+    "chunk-EQCVQC35": {
+      "file": "chunk-EQCVQC35.js"
     }
   }
 }

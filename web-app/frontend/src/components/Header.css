@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  justify-content: space-between; /* Corrected */
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   color: white;
@@ -31,5 +31,19 @@
 }
 
 .headerLinks a:hover {
+  text-decoration: underline;
+}
+
+/* Additional style for the Sign Out button */
+.header button.link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007BFF;
+  padding: 10px;
+  font-size: 1.5rem;
+}
+
+.header button.link:hover {
   text-decoration: underline;
 }
