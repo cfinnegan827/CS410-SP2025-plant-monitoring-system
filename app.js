@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cron from 'node-cron';
 import dotenv from 'dotenv';
 import postRoutes from './routes/posts.js';
+import environmentRoutes from './routes/environments.js';
 import bodyParser from 'body-parser';
 import userModel from './models/Users.js';
 import environmentModel from './models/Environments.js';
@@ -16,6 +17,7 @@ const MONGO_URL = process.env.MONGO_URL;
 app.use(bodyParser.json());
 // Route imports 
 app.use('/posts', postRoutes);
+app.use('/environments', environmentRoutes);
 
 // ROUTES 
 app.get('/', (req, res) => {

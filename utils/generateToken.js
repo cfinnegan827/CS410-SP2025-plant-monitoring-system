@@ -1,10 +1,15 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
 
-export function generateUserToken (userId) {
-    return jwt.sign({
+dotenv.config();
 
-    });
+export function generateUserToken (user) {
+    return jwt.sign(
+        {id: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: '90d'} // sessions expire after 90 days
+    );
 }
 
 export function generateDeviceToken () {

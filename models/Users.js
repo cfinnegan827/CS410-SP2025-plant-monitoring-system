@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {generateVerificationCode} from '../utils/emailTools.js';
+import bcrypt from 'bcryptjs';
 
 const verificationCode = generateVerificationCode();
 const userSchema = new mongoose.Schema({
@@ -42,6 +43,14 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.pre('save', async (params) =>{
+    // will only hash if pass is modified 
+    if (!this.isModified('password')) return next();
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
 
 // create the model
 // Time-to-live TTL only applies to status: pending

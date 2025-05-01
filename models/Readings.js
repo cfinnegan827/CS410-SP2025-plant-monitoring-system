@@ -2,10 +2,15 @@ import mongoose from "mongoose";
 
 
 const readingSchema = new mongoose.Schema({
+    device_id: { 
+      type: String, 
+      ref: 'devices', 
+      required: true 
+    },
     environment_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'environments',
-      required: true
+      default: null
     },
     temp: Number,
     humidity: Number,

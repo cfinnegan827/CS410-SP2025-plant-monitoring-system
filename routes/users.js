@@ -1,5 +1,7 @@
 import express from 'express';
 import userModel from '../models/Users.js';
+import bcrypt from 'bcryptjs';
+import { generateUserToken } from '../utils/generateToken.js';
 
 const router = express.Router();
 
@@ -87,19 +89,51 @@ router.post('/verify', async(req, res) => {
     }
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     // can login in using only username 
-    const {username, password} = req.body;
-    userModel.findOne({ email })
-    .then(user => {
-        if (user) {
-            if (user.password === password) res.json("Success");
-            else res.json("Incorrect username or password");
-        } else res.json("Incorrect username or password");
-    })
+    const {email, password} = req.body;
+   
+    try {
+        await userModel.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Incorrect username or password"
+            })
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({
+                success: false,
+                message: "Incorrect username or password"
+            })
+        }
+
+        // now gen user session stuff
+        const token = generateUserToken(user);
+
+        res.status(200).json({
+            success: true,
+            message: 'Login successful',
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                username: user.username,
+                email: user.email
+            }
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong',
+            error: err.message
+        })
+    }
 
 })
-
-
 
 export default router;

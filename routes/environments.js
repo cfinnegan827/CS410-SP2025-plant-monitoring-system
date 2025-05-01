@@ -5,10 +5,12 @@ import { authDevice } from '../middleware/authDevice.js';
 
 const router = express.Router();
 
-// ADD ENVIRONMENT
+/*
+// ADDS AN ENVIRONMENT
 // WILL NEED TO CHANGE SINCE WE NEED TO CONNECT AN ESP FOR 
 // READINGS
-router.post('/add-environment', async (req, res) => {
+*/
+router.post('/add', async (req, res) => {
     try {
         const {
             environment_name,
@@ -49,8 +51,8 @@ router.post('/add-environment', async (req, res) => {
 })
 
 
-
-router.post('/add-group/:envId', async (req, res) => {
+// adds new plant and or a group of plants to a environment
+router.post('/group/:envId', async (req, res) => {
 
     const { envId } = req.params;
     const { groupName, plant_id, quantity } = req.body;
@@ -87,9 +89,10 @@ router.post('/add-group/:envId', async (req, res) => {
     }
     
 });
-
+// TODO: change to get for visuals (should be in readings)
+// will need to change to a get request since the device makes post
 // GET CURRENT READING + UPDATE READINGS ARRAY
-router.post('/environment/:envId/readings', authDevice, async (req, res) => {
+router.post('/:envId/readings', async (req, res) => {
     const { envId } = req.params;
     const { temp, humidity } = req.body;
 
