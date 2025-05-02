@@ -1,6 +1,21 @@
 .title-center {
     text-align: center;
 }
+
+.dashboard-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2d8cff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+  
+.dashboard-button:hover {
+background-color: #1e6edc;
+}
+
 .dashboardBento {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 equal columns */

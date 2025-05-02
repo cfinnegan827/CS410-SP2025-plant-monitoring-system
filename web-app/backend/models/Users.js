@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         default: Date.now,
-        expires: 900 // Mongo will delete document after 15 minutes
     },
     // Made verificationCode optional since we're not using it now
     verificationCode: {
