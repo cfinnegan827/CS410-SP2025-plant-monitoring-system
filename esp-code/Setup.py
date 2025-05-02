@@ -31,6 +31,7 @@ def setup_mode():
     <form action="/" method="GET">
       SSID: <input type="text" name="ssid"><br>
       Password: <input type="password" name="password"><br>
+      Email: <input type="text" name="email"><br>
       <input type="submit" value="Submit">
     </form>
   </body>
@@ -46,10 +47,11 @@ def setup_mode():
         # Look for the query string
         if "GET /?" in req:
             try:
-                match = ure.search(r'GET /\?ssid=([^&]*)&password=([^ ]+)', req)
+                match = ure.search(r'GET /\?ssid=([^&]*)&password=([^ ]+)&email=([^ ]+)', req)
                 if match:
                     ssid = match.group(1).replace('+', ' ').replace('%20', ' ')
                     password = match.group(2).replace('+', ' ').replace('%21', ' ')
+                    email = match.group(3).replace('+', ' ').replace('%21', ' ')
                     print("SSID:", ssid)
                     print("Password:", password)
                     cl.send("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n")
@@ -66,4 +68,4 @@ def setup_mode():
 
     s.close()
     ap.active(False)
-    return ssid, password
+    return ssid, password, email

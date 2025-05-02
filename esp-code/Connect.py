@@ -13,6 +13,13 @@ def write_credentials(ssid, password):
     file.close()
     return
 
+def write_id(unique_id):
+    with open("unique_id.txt", "w") as file:
+        file.write(f"{unique_id}\n")
+    print("File contents:")
+    file.close()
+    return
+
 
 
 
@@ -29,6 +36,16 @@ def get_credentials():
     file.close()
     return ssid,password
 
+def get_id():
+    '''
+    Get credentials reads the credentials from a file wifi.txt
+    
+    returns the ssid and password for the wifi the product connects too
+    '''
+    with open('unique_id.txt', 'r') as file:
+        unique_id = file.readline().rstrip("\n").rstrip()
+    file.close()
+    return unique_id
 
 
 
@@ -60,10 +77,12 @@ def connect_wifi():
         return True
     else:
         print("Failed to connect.")
-        ssid, password = Setup.setup_mode()
-        print('ssis: ', ssid)
+        ssid, password,email = Setup.setup_mode()
+        print('ssid: ', ssid)
         print('password: ', password)
+        print('email: ', email)
         write_credentials(ssid, password)
+        write_id(email)
         time.sleep(2)
         machine.reset()
         

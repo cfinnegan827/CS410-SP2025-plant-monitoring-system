@@ -9,15 +9,16 @@ import Connect
 
 
 def main():
-    #if Connect.connect_wifi():
-    print("Main program start here!")
-    while True:
-        temp, humidity = TR.get_temp()
-        light_intensity = LI.read_light()
-        soil_moisture= SM.read_soil_moisture()
-        data = [temp, humidity, light_intensity, soil_moisture]
-        #send_data_db(data)
-        time.sleep(2)
+    if Connect.connect_wifi():
+        print("Device Connected Succesfully")
+        while True:
+            temp, humidity = TR.get_temp()
+            light_intensity = LI.read_light()
+            soil_moisture= SM.read_soil_moisture()
+            unique_id = Connect.get_id()
+            data = [unique_id, temp, humidity, light_intensity, soil_moisture]
+            send_data_db(data)
+            time.sleep(2)
 
 main()
 
