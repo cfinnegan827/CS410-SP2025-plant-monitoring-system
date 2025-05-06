@@ -96,7 +96,7 @@ function Dashboard() {
         <div className="card">
           <h2>Current Reading</h2>
           <p><strong>Light:</strong> {latest.light}</p>
-          <p><strong>Temp:</strong> {latest.temperature}°C</p>
+          <p><strong>Temp:</strong> {latest.temperature}°F</p>
           <p><strong>Soil Moisture:</strong> {latest.soilMoisture}%</p>
           <p><strong>Humidity:</strong> {latest.humidity}%</p>
           <p><em>{new Date(latest.timestamp).toLocaleString()}</em></p>
@@ -114,7 +114,7 @@ function Dashboard() {
           {readings.slice(1).map((log, idx) => (
             <div className="logEntry card" key={idx}>
               <p><strong>Light:</strong> {log.light}</p>
-              <p><strong>Temp:</strong> {log.temperature}°C</p>
+              <p><strong>Temp:</strong> {log.temperature}°F</p>
               <p><strong>Soil Moisture:</strong> {log.soilMoisture}%</p>
               <p><strong>Humidity:</strong> {log.humidity}%</p>
               <p><em>{new Date(log.timestamp).toLocaleString()}</em></p>
