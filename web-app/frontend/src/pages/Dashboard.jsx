@@ -1,84 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import Header from '../components/header.jsx';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
-  const [plants, setPlants] = useState(['Plant A', 'Plant B']);
-  const [selectedPlant, setSelectedPlant] = useState('Plant A');
   const [readings, setReadings] = useState([]);
+  const [email, setEmail] = useState('');
   const [showLogs, setShowLogs] = useState(false);
+  const [loading, setLoading] = useState(false);
   const logRef = useRef(null);
 
-  //useEffect(() => {
-    // if (!selectedPlant) return;
- 
-     //fetch(`http://<your-esp-ip>/api/readings?plant=${selectedPlant}`) // adjust endpoint
-       //.then((res) => res.json())
-       //.then((data) => {
-         //setReadings(data);
-         //setLatest(data[0]);
-       //})
-       //.catch((err) => console.error('Failed to fetch data:', err));
-   //}, [selectedPlant]);
-  
-  
-  // Mock data for demonstration
   useEffect(() => {
-    const mockPlantA = [
-      {
-        light: 700,
-        temp: 23.5,
-        moisture: 40,
-        humidity: 60,
-        timestamp: "2025-05-01T14:23:16Z"
-      },
-      {
-        light: 650,
-        temp: 22.8,
-        moisture: 42,
-        humidity: 58,
-        timestamp: "2025-05-01T14:10:00Z"
-      },
-      {
-        light: 600,
-        temp: 24.1,
-        moisture: 38,
-        humidity: 61,
-        timestamp: "2025-05-01T13:50:00Z"
+    const token = localStorage.getItem('userToken');
+    if (!token) return;
+
+    const fetchReadings = async () => {
+      try {
+        const decoded = jwtDecode(token);
+        setEmail(decoded.email);
+
+        const res = await fetch(`http://localhost:5001/api/plants/${decoded.email}`);
+        const data = await res.json();
+
+        if (data.success) {
+          setReadings(data.readings);
+        } else {
+          console.error('Fetch error:', data.message);
+        }
+      } catch (err) {
+        console.error('Error decoding token or fetching data:', err);
       }
-    ];
-  
-    const mockPlantB = [
-      {
-        light: 300,
-        temp: 18.2,
-        moisture: 55,
-        humidity: 72,
-        timestamp: "2025-05-01T15:00:00Z"
-      },
-      {
-        light: 250,
-        temp: 17.9,
-        moisture: 58,
-        humidity: 74,
-        timestamp: "2025-05-01T14:40:00Z"
-      },
-      {
-        light: 200,
-        temp: 19.0,
-        moisture: 60,
-        humidity: 70,
-        timestamp: "2025-05-01T14:20:00Z"
-      }
-    ];
-  
-    if (selectedPlant === 'Plant A') {
-      setReadings(mockPlantA);
-    } else if (selectedPlant === 'Plant B') {
-      setReadings(mockPlantB);
-    }
-  }, [selectedPlant]);
-  
+    };
+
+    fetchReadings();
+  }, []);
+
   useEffect(() => {
     if (logRef.current) {
       if (showLogs) {
@@ -89,59 +45,92 @@ function Dashboard() {
     }
   }, [showLogs]);
 
-  const latest = readings[0];
+  const sortedReadings = [...readings].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const latest = sortedReadings[0];
+
+  const handlePostReading = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:5001/api/plants', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          light: 700,
+          temperature: 23.5,
+          soilMoisture: 40,
+          humidity: 60,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert('Reading posted successfully!');
+        // Optionally refresh readings:
+        setReadings((prev) => [data.reading, ...prev]);
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error posting reading:', error);
+      alert('Failed to post reading');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
       <Header />
       <h1 className="title-center">Dashboard</h1>
 
-      {/* Plant Selector */}
-      <div className="plantSelector">
-        <label htmlFor="plantSelect">Select Plant: </label>
-        <select
-          id="plantSelect"
-          value={selectedPlant}
-          onChange={(e) => setSelectedPlant(e.target.value)}
-        >
-          {plants.map((plant, idx) => (
-            <option key={idx} value={plant}>{plant}</option>
-          ))}
-        </select>
-      </div>
+      {!latest && (
+        <div className="card">
+          <p>No readings yet. Try posting a sample reading below.</p>
+        </div>
+      )}
 
-      {/* Current Reading */}
       {latest && (
         <div className="card">
           <h2>Current Reading</h2>
           <p><strong>Light:</strong> {latest.light}</p>
-          <p><strong>Temp:</strong> {latest.temp}°C</p>
-          <p><strong>Soil Moisture:</strong> {latest.moisture}%</p>
+          <p><strong>Temp:</strong> {latest.temperature}°F</p>
+          <p><strong>Soil Moisture:</strong> {latest.soilMoisture}%</p>
           <p><strong>Humidity:</strong> {latest.humidity}%</p>
           <p><em>{new Date(latest.timestamp).toLocaleString()}</em></p>
         </div>
       )}
 
-      {/* Toggle Button */}
       <div className="logToggleWrapper">
         <button className="logToggleBtn" onClick={() => setShowLogs(!showLogs)}>
           {showLogs ? 'Hide Logs ▲' : 'Show Previous Logs ▼'}
         </button>
       </div>
 
-      {/* Sliding Log Section */}
       <div className="logSectionWrapper" ref={logRef}>
         <div className="logSection">
           {readings.slice(1).map((log, idx) => (
             <div className="logEntry card" key={idx}>
               <p><strong>Light:</strong> {log.light}</p>
-              <p><strong>Temp:</strong> {log.temp}°C</p>
-              <p><strong>Soil Moisture:</strong> {log.moisture}%</p>
+              <p><strong>Temp:</strong> {log.temperature}°F</p>
+              <p><strong>Soil Moisture:</strong> {log.soilMoisture}%</p>
               <p><strong>Humidity:</strong> {log.humidity}%</p>
               <p><em>{new Date(log.timestamp).toLocaleString()}</em></p>
             </div>
           ))}
         </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <button
+          onClick={handlePostReading}
+          className="dashboard-button"
+          disabled={loading}
+        >
+          {loading ? 'Posting...' : 'Post Sample Reading'}
+        </button>
       </div>
     </div>
   );
