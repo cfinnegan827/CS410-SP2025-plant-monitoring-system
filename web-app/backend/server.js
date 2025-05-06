@@ -8,6 +8,7 @@ import postsRoutes from "./routes/posts.js";
 import environmentsRoutes from "./routes/environments.js";
 import plantRoutes from './routes/plants.js';
 
+import devicesRoutes from "./routes/device.js";
 
 dotenv.config();
 
@@ -37,6 +38,8 @@ app.use("/api/users", usersRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/environments", environmentsRoutes);
 app.use('/api/plants', plantRoutes);
+
+app.use("/api/device", devicesRoutes);
 
 
 // Root route
