@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 
 
 const readingSchema = new mongoose.Schema({
-    environment_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'environments',
-      required: true
-    },
-    temp: Number,
+    email: String,
+    light: Number,
+    temperature: Number,
+    soilMoisture: Number,
     humidity: Number,
     timestamp: {
       type: Date,
@@ -16,5 +14,5 @@ const readingSchema = new mongoose.Schema({
   });
 
 
-const readingModel = mongoose.model("readings", readingSchema);
+const readingModel = mongoose.model("plants", readingSchema);
 export default readingModel;
