@@ -90,3 +90,25 @@ body {
     margin-bottom: 20px;
   }
   
+  .dashboard-button {
+    background-color: #ffcc80;
+    color: #333;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-button:hover:not(:disabled) {
+    background-color: #f4b400;
+  }
+  
+  .dashboard-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    color: #777;
+  }
+  

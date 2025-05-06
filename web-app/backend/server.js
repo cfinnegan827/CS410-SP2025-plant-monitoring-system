@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import usersRoutes from "./routes/users.js";  // Make sure this is correct
 import postsRoutes from "./routes/posts.js";
 import environmentsRoutes from "./routes/environments.js";
+import plantRoutes from './routes/plants.js';
+
 import devicesRoutes from "./routes/device.js";
 
 dotenv.config();
@@ -35,6 +37,8 @@ mongoose.connect(process.env.MONGO_URI)
 app.use("/api/users", usersRoutes); 
 app.use("/api/posts", postsRoutes);
 app.use("/api/environments", environmentsRoutes);
+app.use('/api/plants', plantRoutes);
+
 app.use("/api/device", devicesRoutes);
 
 
