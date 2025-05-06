@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Create the model
-userSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900, partialFilterExpression: { status: 'pending' } });
+userSchema.index({ createdAt: 1 }, { partialFilterExpression: { status: 'pending' } });
 
 const userModel = mongoose.model("users", userSchema);
 export default userModel;
