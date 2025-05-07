@@ -1,19 +1,11 @@
 import mongoose from "mongoose";
-import {generateVerificationCode} from '../utils/emailTools.js';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
-const verificationCode = generateVerificationCode();
+// const verificationCode = generateVerificationCode();
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
-    },
-    username: {
-        type: String,
-        unique: true,
-        required: true,
-        trim: true,
-        lowercase:true
     },
     email: {
         type: String,
@@ -27,34 +19,27 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    created_at: {
-        type: Date,
-        default: Date.now,
-        expires: 900 // will make mongo delete the document after 15 minutes
-    },
-    verificationCode: {
+    profileImageUrl: {
         type: String,
-        required: true
+        default: null
     },
-    status: {
-        type: String, 
-        enum: ['pending', 'verified'], // allowed values
-        default: 'pending'
-    }
-});
+    
+}, { timestamps: true }
+);
 
-userSchema.pre('save', async (params) =>{
-    // will only hash if pass is modified 
-    if (!this.isModified('password')) return next();
-
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+// hash password
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next(); // ← this must be defined
+  
+    // hash password or any other logic
+    this.password = await bcrypt.hash(this.password, 10);
     next();
-});
+  });
 
-// create the model
-// Time-to-live TTL only applies to status: pending
-userSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900, partialFilterExpression: { status: 'pending' } });
+// compare pass
+userSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password)
+}
 
 const userModel = mongoose.model("users", userSchema);
 export default userModel;

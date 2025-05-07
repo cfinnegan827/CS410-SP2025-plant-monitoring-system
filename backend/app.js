@@ -1,67 +1,46 @@
 import express from 'express';
-import mongoose from 'mongoose';
-import cron from 'node-cron';
+// import mongoose from 'mongoose';
+//import cron from 'node-cron';
 import dotenv from 'dotenv';
-import postRoutes from './routes/posts.js';
-import environmentRoutes from './routes/environments.js';
-import bodyParser from 'body-parser';
-import userModel from './models/Users.js';
+import cors from 'cors'
+import userRoutes from './routes/users.js';
+// import environmentRoutes from './routes/environments.js';
+// import bodyParser from 'body-parser';
+//import userModel from './models/Users.js';
+import {connectDB} from './config/db.js';
+
+import path from 'path'
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 // import environmentModel from './models/Environments.js';
 
 const app = express();
 dotenv.config();
 
-const PORT = process.env.PORT || 8080;
-const MONGO_URL = process.env.MONGO_URL;
+// const MONGO_URL = process.env.MONGO_URL;
 
-app.use(bodyParser.json());
-// Route imports 
-app.use('/posts', postRoutes);
-app.use('/environments', environmentRoutes);
+// Middlewares to handle req headers and body
+app.use(express.json());
+app.use('/ap1/v1/auth', userRoutes);
+//app.use('/environments', environmentRoutes);
 
-// ROUTES 
-app.get('/', (req, res) => {
-    res.send('server is working');
-});
+// Middlewares to handle CORS
+app.use(
+    cors({
+        origin: process.env.CLIENT_URL || "*",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"]
+    })
+)
 
+// Serve uploads to folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
-
-
+connectDB();
 // Connection to DB
-mongoose.connect(MONGO_URL).then(async () => {
-    console.log("DB is connected");
-
-    try {
-        await userModel.syncIndexes();
-        console.log("Indexes synced successfully.");
-    } catch (err) {
-        console.log("Error syncing indexes:", err.message);
-    }
-    app.listen(PORT, ()=> {
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, ()=> {
         console.log(`server is running on port ${PORT}`);
     });
-}).catch((error) => {
-    console.log(error);
-    console.log('could not connect');
-});
-
-// cron.schedule('*/15 * * *', async () => {
-//     try {
-//         const environments = await environmentModel.find();
-
-//         for (const env of environments) {
-//             if (env.current_temp && env.current_humidity) {
-//                 env.readings.push({
-//                     temp: env.current_temp,
-//                     humidity: env.current_humidity
-//                 });
-//                 await env.save();
-//             }
-//         }
-//     } catch (err) {
-//         res.status(500).json({
-//             success: false,
-//             error: err.message
-//         })
-//     }
-// })

@@ -6,9 +6,10 @@ import { authDevice } from '../middleware/authDevice.js';
 const router = express.Router();
 
 /*
-// ADDS AN ENVIRONMENT
-// WILL NEED TO CHANGE SINCE WE NEED TO CONNECT AN ESP FOR 
-// READINGS
+create environments
+delete environment 
+update environment
+read/get environment
 */
 router.post('/add', async (req, res) => {
     try {
