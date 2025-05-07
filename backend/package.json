@@ -1,0 +1,30 @@
+{
+  "name": "cs410-sp2025-plant-monitoring-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cfinnegan827/CS410-SP2025-plant-monitoring-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cfinnegan827/CS410-SP2025-plant-monitoring-system/issues"
+  },
+  "homepage": "https://github.com/cfinnegan827/CS410-SP2025-plant-monitoring-system#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9"
+  }
+}
