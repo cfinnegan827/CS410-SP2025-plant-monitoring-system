@@ -1,3 +1,6 @@
+// environment.js - API routes for environments 
+// we did not end up using these, under api branch this does get used and is more simplified and structured 
+
 import express from 'express';
 import environmentModel from '../models/Environments.js';
 
@@ -6,6 +9,11 @@ const router = express.Router();
 // ADD ENVIRONMENT
 // WILL NEED TO CHANGE SINCE WE NEED TO CONNECT AN ESP FOR 
 // READINGS
+
+/*
+ * @route POST /api/evironments/add-environment
+ * @desc POST route to create a new environment
+ */
 router.post('/add-environment', async (req, res) => {
     try {
         const {
@@ -47,7 +55,11 @@ router.post('/add-environment', async (req, res) => {
 })
 
 
-
+/*
+ * @route POST /api/environments/add-group/:envId
+ * @desc POST route for adding a gorup of like plants 
+ * i.e adding 10 broccoli to the greenhouse 
+ */
 router.post('/add-group/:envId', async (req, res) => {
 
     const { envId } = req.params;
@@ -87,6 +99,12 @@ router.post('/add-group/:envId', async (req, res) => {
 });
 
 // GET CURRENT READING + UPDATE READINGS ARRAY
+/*
+ * @route PATCH /api/environments/add-group/:envId
+ * @desc PATCH route updating current readings and adding readings to historical data schema readings
+ * i think I was builfing routes for a software that is not feasable with our timeframe but if we had more time
+ * logic like this or similar would have been used
+ */
 router.patch('/environment/:envId/get-readings', async (req, res) => {
     const { envId } = req.params;
     const { temp, humidity } = req.body;
@@ -130,6 +148,7 @@ router.patch('/environment/:envId/get-readings', async (req, res) => {
 })
 
 // VERIFICATION 
+// was supposed to be used to verify users, this does not belong here and was never used
 router.post('/verify', async(req, res) => {
     const { email, verificationCode, password } = req.body;
 
@@ -168,53 +187,7 @@ router.post('/verify', async(req, res) => {
     }
 })
 
-router.post('/login', (req, res) => {
-    // can login in using email or username 
-    const {username, password} = req.body;
-    userModel.findOne({username:username})
-    .then(user => {
-        if (user) {
-            if (user.password === password) res.json("Success");
-            else res.json("Incorrect username or password");
-        } else res.json("Incorrect username or password");
-    })
-
-})
-
-// ENVIRONMENT SETUP
-// router.post('add-plants', async (req, res) => {
-//     const {user_id, {
-        
-//     }} = req.body;
-    
-//     try {
-//         const updatedEnvironment = await 
-//     }
-// })
-
-//
 
 
-// to get a specific post 
-router.get('/:postId', async (req, res) => {
-    try {
-        const post = await Post.findById(req.params.postId);
-        res.json(post);
-    } catch (err) {
-        res.json( {message: err});
-    }
-    
-})
-
-// DELETE A POST 
-router.delete('/:postId', async (req, res) => {
-    try {
-        const removePost = await Post.remove({_id: req.params.postId});
-        res.json(removedPost);
-    } catch (err) {
-        res.json( {message: err});
-    }
-    
-})
 
 export default router;
