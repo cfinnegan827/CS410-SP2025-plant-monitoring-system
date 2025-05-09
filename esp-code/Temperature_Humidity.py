@@ -6,6 +6,11 @@ import machine
 dht_pin = machine.Pin(15)
 sensor = dht.DHT11(dht_pin)
 
+# get temperature
+# a function that reads the temperature and humidity data
+# from the dht11 sensor and then makes an appropriate calucltion
+# from celcisu to fahrenheit and then sleeps for a defualt of 2 seconds
+# and returns the temperautre and humiditiy.
 def get_temp(time_sleep=2):
     sensor.measure()
     temp = sensor.temperature()
@@ -16,10 +21,12 @@ def get_temp(time_sleep=2):
     time.sleep(time_sleep)
     return temp,hum
 
+
 #small function to switch from fahrenheit to celcius
 def f_to_c(temp: int):
     final_temp = (temp - 32) / 1.8
     return final_temp
+
 
 #small function to switch from celcius to fahrenheit
 def c_to_f(temp: int):
