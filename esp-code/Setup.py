@@ -3,10 +3,16 @@ import network
 import socket
 import ure
 
-
+# setup mode
+# a function that simulates a startup procedure where the esp32 will act as an accesspoint
+# for the user to connect to. Then they will go to the webpage the esp32 is serving where they will
+# then enter the correct wifi ssid and password where the esp then reboots and tries to connect again.
 def setup_mode():
+    
+    #put the esp into access point mode 
     ap = network.WLAN(network.AP_IF)
     ap.active(True)
+    #set the ssid and password for the network the esp is transmitting
     ap.config(essid='Plant Monitor', password='Plant-Monitoring123', authmode=3)
 
     addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
@@ -20,6 +26,7 @@ def setup_mode():
     ssid = None
     password = None
 
+    #simple html form that will be sued for the credentials to be inputed
     html = """\
 <!DOCTYPE html>
 <html>
@@ -39,6 +46,7 @@ def setup_mode():
 
     while True:
         cl, addr = s.accept()
+        #output the address of the webpage
         print("Client connected from", addr)
         req = cl.recv(1024).decode()
         print("Request:", req)
@@ -46,6 +54,7 @@ def setup_mode():
         # Look for the query string
         if "GET /?" in req:
             try:
+                #search for the ssid and password for the user entered credentials
                 match = ure.search(r'GET /\?ssid=([^&]*)&password=([^ ]+)', req)
                 if match:
                     ssid = match.group(1).replace('+', ' ').replace('%20', ' ')
@@ -66,4 +75,5 @@ def setup_mode():
 
     s.close()
     ap.active(False)
+    #return the user credentials
     return ssid, password
