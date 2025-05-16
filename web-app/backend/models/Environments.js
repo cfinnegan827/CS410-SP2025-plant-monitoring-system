@@ -1,6 +1,11 @@
+// Environments.js - Mongoose model for different environments i.g plants in the shed and plants in the kitchen 
 import mongoose from "mongoose";
 
+/*
+@desc holds the desired measurements, if a sensor reports outside the bounds we can use these values to check
+and then send notifications
 
+*/
 const environmentSchema = new mongoose.Schema({
     environment_name: String,
     user_id: {

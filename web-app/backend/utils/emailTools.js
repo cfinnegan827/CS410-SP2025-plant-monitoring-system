@@ -1,3 +1,8 @@
+// emailTools.js - used for verifying and other notifications 
+
+/*
+we did not use any of these since we did not end up building the frontend for email verification
+*/
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 

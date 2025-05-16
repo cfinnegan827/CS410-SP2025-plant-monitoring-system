@@ -1,3 +1,9 @@
+/*
+this was never used 
+this was more of a test for when I was learning routes 
+should disregard this file
+*/
+
 import express from 'express';
 import userModel from '../models/Users.js';
 
